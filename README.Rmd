@@ -1,0 +1,22 @@
+---
+title: "README"
+author: "Yinuo Zhou"
+date: "2025-10-03"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+##Mini Data Analysis of Yinuo Zhou
+This repository is for the mini data analysis of the STAT 545A course at the University of British Columbia. In this analysis, I choosed a provided dataset and practiced exploratory analysis on it. 
+
+##This repository contains following files:
+_README.Rmd_:A brief introduction of this repository
+_mini-project-1.Rmd_:An Rmd file which recorded how I choose the dataset and my initial research questions.
+_mini-project-1.md_:An md output that knitted from the according Rmd file.
+
+##You can run this repository by following steps:
+1. Clone the repository to your local devices in R studio.
+2. Open the _mini-project-1.Rmd_ file.
+3. Click the _knit_ button at the upper left corner and get the output.
