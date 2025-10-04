@@ -4,7 +4,7 @@ This repository is for the mini data analysis of the STAT 545A course at the Uni
 
 ## This repository contains following files:
 
-*README.Rmd*:A brief introduction of this repository
+*README.md*:A brief introduction of this repository
 
 *mini-project-1.Rmd*:An Rmd file which recorded how I choose the dataset and my initial research questions.
 
