@@ -250,7 +250,7 @@ I'll choose _steam_games_ as the dataset of my mini data analysis for following 
 
 <!-------------------------- Start your work below ---------------------------->
 
-My research question is: What factors affect the prices and review ratings of Steam games? 
+My research question is: What factors would affect the prices and review ratings of Steam games? 
 
 <!----------------------------------------------------------------------------->
 
@@ -281,6 +281,106 @@ Make sure that you're using dplyr and ggplot2 rather than base R for this task. 
 
 <!-------------------------- Start your work below ---------------------------->
 
+```{r}
+#library the pack needed
+library(ggplot2)
+```
+
+
+1. Plot the distribution of a numeric variable.
+
+Since I plan to explore the factors influencing the price of the games, I'll first plot the distribution of oringal_price and discount_price to get a general idea.
+
+```{r}
+#plot a box plot to see the distribution of the original price.
+ggplot(steam_games, aes(x = id, y = original_price)) +
+  geom_line(fill = "skyblue")
+
+```
+
+
+```{r}
+#I notice there are two entries with extremely high original price. I think there might be some error about these two, so I decide to exclude them from my analysis.
+
+steam_games_filtered <- steam_games %>%  #create a new dataset
+  arrange(desc(original_price)) %>%   #arrange the entries in descending order.
+  slice(-(1:2))  #exlude the two entries with extremely high orginal price
+
+#plot the distribution plot again.
+#line graph:
+ggplot(steam_games_filtered, aes(x = id, y = original_price)) +
+  geom_line(fill = "skyblue" )
+#histogram:
+ggplot(steam_games_filtered, aes(x = original_price)) +
+  geom_histogram(fill = "skyblue" )
+
+```
+
+
+
+2.  Investigate how many missing values there are per variable. Can you find a way to plot this?
+
+```{r}
+# I have already investigated missing value of original price in task 1, I'll now plot into a bar chart.
+
+#add a new variable to show the missing status
+steam_games_filtered <- steam_games %>%
+  mutate(missing_status = ifelse(is.na(original_price), "Missing", "Not Missing"))
+
+#plot the missing data into bar chart.
+
+ggplot(steam_games_filtered, aes(x = missing_status, fill = missing_status)) +
+  geom_bar() +  
+  labs(title = "Missing vs Non-Missing Original Price",
+       x = "Missing Status",
+       y = "Count") +
+  scale_fill_manual(values = c("Missing" = "red", "Not Missing" = "skyblue")) 
+
+```
+
+3.  Explore the relationship between 2 variables in a plot.
+
+I plan to explore what factors would influence the price of games. I'll fist investigate the relationship between types and original price.
+
+```{r}
+#Clean the data to exclude the outliers.
+steam_games_filtered <- steam_games %>%
+  filter(!is.na(original_price) & is.finite(original_price)) %>%
+  group_by(types) %>%
+  filter(original_price <= quantile(original_price, 0.99)) %>%
+  ungroup()
+
+
+#Paint the boxplot to see the relationship between types and price.
+ggplot(steam_games_filtered, aes(x = types, y = original_price, fill = types)) +
+  geom_boxplot(outlier.shape = NA, width = 0.6, alpha =0.5) 
+  labs(title = "Original Price by Type",
+       x = "Type",
+       y = "Original Price") 
+
+```
+
+
+4.  Use a density plot to explore any of your variables (that are suitable for this type of plot).
+
+I'll draw the density plot to explore the discount price and orginal price.
+
+```{r}
+ggplot(steam_games_filtered, aes(x = discount_price)) +
+  geom_density(fill = "skyblue", alpha = 0.5) +  
+  labs(title = "Density Plot of Discount Price",
+       x = "Discount Price",
+       y = "Density") 
+
+ggplot(steam_games_filtered, aes(x = original_price)) +
+  geom_density(fill = "red", alpha = 0.5) +  
+  labs(title = "Density Plot of Original Price",
+       x = "Original Price",
+       y = "Density") 
+
+```
+
+
 <!----------------------------------------------------------------------------->
 
 # Task 3: Choose research questions
@@ -288,6 +388,21 @@ Make sure that you're using dplyr and ggplot2 rather than base R for this task. 
 **(4 points)** So far, you have chosen a dataset and gotten familiar with it through exploring the data. You have also brainstormed one research question that interested you (Task 1.4). Now it's time to pick 4 research questions that you would like to explore in Milestone 2! Write the 4 questions and any additional comments below.
 
 <!--- *****START HERE***** --->
+
+
+1. What factors determine a game’s price?
+
+My hypothesis: Game type, the year of release, or achievements would influence the price.
+
+2. What factors affect the discount strategy of games?
+
+My hypothesis: Games with better reviews tend to have lower discount rate.
+
+3. Does the relationship between discount rate and review score differ by game type?
+
+4. Are high-priced games with large discounts more likely to receive positive reviews?
+
+
 
 <!----------------------------->
 
