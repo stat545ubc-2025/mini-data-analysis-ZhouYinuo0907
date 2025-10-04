@@ -1,7 +1,9 @@
 ---
 title: "Mini Data-Analysis Deliverable 1"
 author: "Yinuo Zhou"
-output: github_document
+output: 
+  md_document:
+    variant: gfm 
 ---
 
 # Welcome to your (maybe) first-ever data analysis project!
