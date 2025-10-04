@@ -1,6 +1,11 @@
 ---
 title: "Mini Data-Analysis Deliverable 1"
-output: html_document
+output: ---
+author: "Yinuo Zhou"
+output: 
+  md_document:
+    variant: gfm       
+    fig_caption: true  
 ---
 
 # Welcome to your (maybe) first-ever data analysis project!
@@ -235,14 +240,13 @@ cancer_sample %>%
 
 <!-------------------------- Start your work below ---------------------------->
 
-I'll choose _steam_games_ as the dataset of my mini data analysis for following reasons:
+I'll choose *steam_games* as the dataset of my mini data analysis for following reasons:
 
-1. I personally enjoy steam games, so it would be joyful for me to do an analysis on that topic.
+1.  I personally enjoy steam games, so it would be joyful for me to do an analysis on that topic.
 
-2. The dataset contains 40,833 entries, which provides a sufficiently large sample size for my analysis.
+2.  The dataset contains 40,833 entries, which provides a sufficiently large sample size for my analysis.
 
-3. The dataset includes a balanced amount of categorical and numerical variables, unlike _cancer_sample_ which contains mainly numerical ones, allowing me to practice a wider range of data analysis techniques.
-
+3.  The dataset includes a balanced amount of categorical and numerical variables, unlike *cancer_sample* which contains mainly numerical ones, allowing me to practice a wider range of data analysis techniques.
 
 <!----------------------------------------------------------------------------->
 
@@ -250,7 +254,7 @@ I'll choose _steam_games_ as the dataset of my mini data analysis for following 
 
 <!-------------------------- Start your work below ---------------------------->
 
-My research question is: What factors would affect the prices and review ratings of Steam games? 
+My research question is: What factors would affect the prices and review ratings of Steam games?
 
 <!----------------------------------------------------------------------------->
 
@@ -286,8 +290,7 @@ Make sure that you're using dplyr and ggplot2 rather than base R for this task. 
 library(ggplot2)
 ```
 
-
-1. Plot the distribution of a numeric variable.
+1.  Plot the distribution of a numeric variable.
 
 Since I plan to explore the factors influencing the price of the games, I'll first plot the distribution of oringal_price and discount_price to get a general idea.
 
@@ -297,7 +300,6 @@ ggplot(steam_games, aes(x = id, y = original_price)) +
   geom_line(fill = "skyblue")
 
 ```
-
 
 ```{r}
 #I notice there are two entries with extremely high original price. I think there might be some error about these two, so I decide to exclude them from my analysis.
@@ -315,8 +317,6 @@ ggplot(steam_games_filtered, aes(x = original_price)) +
   geom_histogram(fill = "skyblue" )
 
 ```
-
-
 
 2.  Investigate how many missing values there are per variable. Can you find a way to plot this?
 
@@ -360,7 +360,6 @@ ggplot(steam_games_filtered, aes(x = types, y = original_price, fill = types)) +
 
 ```
 
-
 4.  Use a density plot to explore any of your variables (that are suitable for this type of plot).
 
 I'll draw the density plot to explore the discount price and orginal price.
@@ -380,7 +379,6 @@ ggplot(steam_games_filtered, aes(x = original_price)) +
 
 ```
 
-
 <!----------------------------------------------------------------------------->
 
 # Task 3: Choose research questions
@@ -389,20 +387,17 @@ ggplot(steam_games_filtered, aes(x = original_price)) +
 
 <!--- *****START HERE***** --->
 
-
-1. What factors determine a game’s price?
+1.  What factors determine a game’s price?
 
 My hypothesis: Game type, the year of release, or achievements would influence the price.
 
-2. What factors affect the discount strategy of games?
+2.  What factors affect the discount strategy of games?
 
 My hypothesis: Games with better reviews tend to have lower discount rate.
 
-3. Does the relationship between discount rate and review score differ by game type?
+3.  Does the relationship between discount rate and review score differ by game type?
 
-4. Are high-priced games with large discounts more likely to receive positive reviews?
-
-
+4.  Are high-priced games with large discounts more likely to receive positive reviews?
 
 <!----------------------------->
 
