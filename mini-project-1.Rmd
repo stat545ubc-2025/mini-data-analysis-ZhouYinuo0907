@@ -250,7 +250,7 @@ I'll choose _steam_games_ as the dataset of my mini data analysis for following 
 
 <!-------------------------- Start your work below ---------------------------->
 
-My research question is: What factors affect the prices and review ratings of Steam games?
+My research question is: What factors affect the prices and review ratings of Steam games? 
 
 <!----------------------------------------------------------------------------->
 
