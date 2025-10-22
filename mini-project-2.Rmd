@@ -56,10 +56,20 @@ From Milestone 1, you should have an idea of the basic structure of your dataset
 First, write out the 4 research questions you defined in milestone 1 were. This will guide your work through milestone 2:
 
 <!-------------------------- Start your work below ---------------------------->
-1. *FILL_THIS_IN*
-2. *FILL_THIS_IN*
-3. *FILL_THIS_IN*
-4. *FILL_THIS_IN*
+1.  What factors determine a game’s price?
+
+My hypothesis: Game type, the year of release, or achievements would
+influence the price.
+
+2.  What factors affect the discount strategy of games?
+
+My hypothesis: Games with better reviews tend to have lower discount
+rate.
+
+3.  What is the relationship between discount rate and review score?
+
+4.  Are high-priced games with large discounts more likely to receive
+    positive reviews?
 <!----------------------------------------------------------------------------->
 
 Here, we will investigate your data using various data manipulation and graphing functions.
@@ -92,6 +102,185 @@ Using variables and/or tables you made in one of the "Summarizing" tasks:
 Make sure it's clear what research question you are doing each operation for!
 
 <!------------------------- Start your work below ----------------------------->
+
+```{r}
+#lirary the package needed
+library(ggplot2)
+library(dplyr)
+#In milestone 1, I notice there are two entries with extremely high original price. I think there might be some error about these two, so I decide to exclude them from my analysis.
+
+steam_games_filtered <- steam_games %>%  #create a new dataset
+  arrange(desc(original_price)) %>%   #arrange the entries in descending order.
+  slice(-(1:2))  #exclude the two entries with extremely high original price
+
+```
+
+1.  What factors determine a game’s price?
+  For this question. I want to see the relationship between game type and original price, so I would choose "1.Compute the *range*, *mean*, and *two other summary statistics* of **one numerical variable** across the groups of **one categorical variable** from your data."
+```{r}
+steam_games_filtered %>%
+  group_by(types) %>%
+  summarise(
+    mean_price = mean(original_price, na.rm = TRUE),
+    max_price = max(original_price, na.rm = TRUE),
+    min_price = min(original_price, na.rm = TRUE),
+    median_price = median(original_price, na.rm = TRUE),
+    sd_price = sd(original_price, na.rm = TRUE)
+  )
+
+```
+Then I want to draw a histogram to compare the mean original prices of these three types, so I choose 8. Create a graph that has at least two geom layers. 
+
+```{r}
+mean_price <- steam_games_filtered %>%
+  group_by(types) %>%
+  summarise(mean_price = mean(original_price, na.rm = TRUE))
+            
+ggplot(mean_price, aes(x = types, y = mean_price, fill = types)) +
+  geom_col(alpha = 0.7) +  # Layer 1: bars
+  geom_text(aes(label = round(mean_price, 2)),  # Layer 2: labels
+            vjust = -0.5, size = 4) +
+  labs(title = "Mean Original Price by Game Types",
+       x = "Game Type",
+       y = "Mean Original Price ($)") +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+```
+
+
+
+2.  What factors affect the discount strategy of games?
+
+Because the original prices of every game are different, I think it would be much clear if I calculate the discount rate rather than directly compare the discount price. And I will then create a new variable based on the discount rate, so I will choose 3.  Create a categorical variable with 3 or more groups from an existing numerical variable. 
+
+```{r}
+steam_games_filtered <- steam_games_filtered %>%
+# Exclude rows with missing data, free games, and cases where the discount price is higher than the original price.
+  filter(
+    !is.na(original_price),
+    !is.na(discount_price),
+    original_price > 0,
+    discount_price <= original_price
+  ) %>%
+  mutate(
+    discount_percent = ((original_price - discount_price) / original_price) * 100,
+    discount_level = case_when(
+      discount_percent < 30 ~ "Low Discount",
+      discount_percent < 70 ~ "Medium Discount",
+      TRUE ~ "High Discount"
+    )
+  )
+
+
+
+```
+
+Then I want to draw a histogram to see the proportion and counts of each discount level in the three game types, so I choose 8. Create a graph that has at least two geom layers. 
+
+
+```{r}
+
+
+ggplot(steam_games_filtered, aes(x = types, fill = discount_level)) +
+  geom_bar(position = "fill") +  
+  labs(title = "Distribution of Discount Levels by Game Type",
+       x = "Game Type",
+       y = "Proportion",
+       fill = "Discount Level") +
+  scale_y_continuous(labels = scales::percent) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+
+```
+
+3.  What is the relationship between discount rate and review score?
+
+I would like to check the proportion and counts of each discount level in each review score, so I will choose 4. Compute the proportion and counts in each category of one categorical variable across the groups of another categorical variable from your data. 
+
+I will first categorize all_review into 3 levels: mixed,mostly negative, mostly positive, positive and very positive.
+
+```{r}
+steam_games_filtered <- steam_games_filtered %>%
+  mutate(
+    review_level = case_when(
+      grepl("^Very Positive", all_reviews, ignore.case = TRUE) ~ "Very Positive",
+      grepl("^Positive", all_reviews, ignore.case = TRUE)      ~ "Positive",
+      grepl("^Mostly positive", all_reviews, ignore.case = TRUE)         ~ "Mostly positive",
+      grepl("^Mostly negative", all_reviews, ignore.case = TRUE)         ~ "Mostly negative",
+      grepl("^Mixed", all_reviews, ignore.case = TRUE)         ~ "Mixed",
+      TRUE                                                      ~ "Other"    )
+  )
+
+```
+
+Then I will explore the relationship between review levels and discount levels.
+
+```{r}
+
+library(dplyr)
+
+discount_review_summary <- steam_games_filtered %>%
+  group_by(review_level, discount_level) %>%
+  summarise(count = n(), .groups = "drop") %>% 
+  group_by(review_level) %>%                  
+  mutate(proportion = count / sum(count))    
+
+discount_review_summary
+
+```
+
+I would like to visualize my findings with histogram, so I would choose 8. Create a graph that has at least two geom layers. 
+
+```{r}
+library(ggplot2)
+
+ggplot(discount_review_summary, aes(x = review_level, y = proportion, fill = discount_level)) +
+  geom_col(position = "fill") +  
+  labs(title = "Distribution of Discount Level by review Level",
+       x = "Review Level",
+       y = "Proportion",
+       fill = "Discount Level") +
+  theme_minimal()
+
+```
+
+
+4.  Are high-priced games with large discounts more likely to receive
+    positive reviews?
+    
+To analyze this question, I would like to first define what high-priced games are. I would like to rearrange the original prices in descending order, and categorize the first quatile as high-priced games, so I would choose 3. Create a categorical variable with 3 or more groups from an existing numerical variable.
+    
+```{r}
+steam_games_filtered <- steam_games_filtered %>%
+  mutate(
+    high_price = ifelse(original_price >= quantile(original_price, 0.75), "High Price", "Other")
+  )
+
+```
+
+Then I would like to paint a histogram to see the distribution of review levels in each discount levels among high-priced games, so I would choose 8. Create a graph that has at least two geom layers. 
+
+```{r}
+
+high_price_review <- steam_games_filtered %>%
+  filter(high_price == "High Price") %>%
+  group_by(discount_level, review_level) %>%
+  summarise(count = n(), .groups = "drop")
+
+ggplot(discount_review_summary, aes(x = discount_level, y = proportion, fill = review_level)) + 
+  geom_col(position = "fill") + 
+  labs(title = "Distribution of Review Level by Discount Level(High-priced games)", x = "Discount Level", y = "Proportion", fill = "Review Level") + 
+  theme_minimal()
+
+
+
+```
+
+    
+    
+    
 
 <!----------------------------------------------------------------------------->
 
