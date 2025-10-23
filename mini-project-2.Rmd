@@ -474,6 +474,18 @@ Take a summary table that you made from Task 1, and write it as a csv file in yo
 
 <!-------------------------- Start your work below ---------------------------->
 
+I would like to output the mean_price as a csv.file.
+
+```{r}
+
+library(here)
+
+write.csv(mean_price, here("output", "mean_price.csv"), row.names = FALSE)
+
+```
+
+
+
 <!----------------------------------------------------------------------------->
 
 ## 4.2 (3 points)
@@ -483,6 +495,14 @@ Write your model object from Task 3 to an R binary file (an RDS), and load it ag
 -   The same robustness and reproducibility criteria as in 4.1 apply here.
 
 <!-------------------------- Start your work below ---------------------------->
+I'm going to save original_price_model as an RDS file and then load it again.
+
+```{r}
+saveRDS(original_price_model, here("output", "original_price_model.rds"))
+loaded_model <- readRDS(here("output", "original_price_model.rds"))
+loaded_model
+
+```
 
 <!----------------------------------------------------------------------------->
 
