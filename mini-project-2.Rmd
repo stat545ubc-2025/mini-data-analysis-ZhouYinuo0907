@@ -312,6 +312,19 @@ Based on the definition above, can you identify if your data is tidy or untidy? 
 
 <!--------------------------- Start your work below --------------------------->
 
+```{r}
+library(tidyr)
+steam_games_tidy <- steam_games_filtered %>%
+  select(name, types, original_price, discount_price, discount_percent,
+         discount_level, review_level, high_price)
+
+print(steam_games_tidy)
+
+
+```
+
+I examined 8 variables from my dataset: name, type, original_price, discount_price, discount_percent, discount_level, review_level, and high_price. Overall, the dataset is tidy, as each row represents one game (an observation) and each column represents a single variable.
+
 <!----------------------------------------------------------------------------->
 
 ### 2.2 (4 points)
@@ -324,6 +337,39 @@ Be sure to explain your reasoning for this task. Show us the "before" and "after
 
 <!--------------------------- Start your work below --------------------------->
 
+To untidy my data, I would like to merge the two price columns (oringal price and discount price) into one price column containing two variables. I would also merge discount percent and discount level into one discount columns containing two variables.
+
+```{r}
+steam_games_untidy <- steam_games_tidy %>%
+  mutate(
+    price_bundle = paste0("orig=", original_price, ";disc=", discount_price),
+    discount_bundle = paste0("pct=", round(discount_percent, 2), ";lvl=", discount_level)
+  ) %>%
+  select(name, types, price_bundle, discount_bundle, review_level, high_price)
+print(steam_games_untidy)
+
+```
+
+Now, I'm going to tidy it back to original state, making sure each column only contains one variable, and each cell only contains one value.
+
+```{r}
+steam_games_retiddy <- steam_games_untidy %>%
+  separate(price_bundle, into = c("orig_part", "disc_part"), sep = ";", remove = TRUE) %>%
+  separate(discount_bundle, into = c("pct_part", "lvl_part"), sep = ";", remove = TRUE) %>%
+  mutate(
+    original_price   = as.numeric(str_replace(orig_part, "orig=", "")),
+    discount_price   = as.numeric(str_replace(disc_part, "disc=", "")),
+    discount_percent = as.numeric(str_replace(pct_part, "pct=", "")),
+    discount_level   = str_replace(lvl_part, "lvl=", "")
+  ) %>%
+  select(name, types, original_price, discount_price,
+         discount_percent, discount_level, review_level, high_price)
+
+print(steam_games_retiddy)
+
+```
+
+
 <!----------------------------------------------------------------------------->
 
 ### 2.3 (4 points)
@@ -332,14 +378,17 @@ Now, you should be more familiar with your data, and also have made progress in 
 
 <!-------------------------- Start your work below ---------------------------->
 
-1.  *FILL_THIS_IN*
-2.  *FILL_THIS_IN*
+1.  What factors determine a game’s price?
+2.  What factors affect the discount strategy of games?
 
 <!----------------------------------------------------------------------------->
 
 Explain your decision for choosing the above two research questions.
 
 <!--------------------------- Start your work below --------------------------->
+
+I would choose the above two research questions because in previous tasks, I only explore the relationship between game types and review levels with game prices and discount rate. I think there would be other undetect factors. I'm also interested in the relationship between release dates and game prices.
+
 
 <!----------------------------------------------------------------------------->
 
@@ -349,6 +398,10 @@ Now, try to choose a version of your data that you think will be appropriate to 
 
 <!--------------------------- Start your work below --------------------------->
 
+I would choose the tidy version of data to continue my analysis because my analysis focuses on the pricing and discounting of games, which involves numeric variables. It would be easier for me to visualize the data if one column only contains one value.
+
+
+
 # Task 3: Modelling
 
 ## 3.0 (no points)
@@ -357,9 +410,11 @@ Pick a research question from 1.2, and pick a variable of interest (we'll call i
 
 <!-------------------------- Start your work below ---------------------------->
 
-**Research Question**: FILL_THIS_IN
+**Research Question**:  What factors determine a game’s price?
 
-**Variable of interest**: FILL_THIS_IN
+**Variable of interest**: original price, release date.
+
+I'm interested the relationship between original price and release date of the games. My hypothesis is that older games tend to have lower orginal prices than the new ones. 
 
 <!----------------------------------------------------------------------------->
 
