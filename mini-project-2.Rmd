@@ -1,22 +1,26 @@
 ---
 title: "Mini Data Analysis Milestone 2"
 output: html_document
+editor_options: 
+output: 
+  md_document:
+    variant: gfm 
 ---
 
 *To complete this milestone, you can edit [this `.rmd` file](https://github.com/UBC-STAT/STAT545.github.io/blob/main/content/mini-data-analysis/mini-project-2.Rmd) directly. Fill in the sections that are commented out with `<!--- start your work here--->`. When you are done, make sure to knit to an `.md` file by changing the output in the YAML header to `github_document`, before submitting a tagged release on canvas.*
 
 # Welcome to the rest of your mini data analysis project!
 
-In Milestone 1, you explored your data. and came up with research questions. This time, we will finish up our mini data analysis and obtain results for your data by: 
+In Milestone 1, you explored your data. and came up with research questions. This time, we will finish up our mini data analysis and obtain results for your data by:
 
-- Making summary tables and graphs 
-- Manipulating special data types in R: factors and/or dates and times.
+-   Making summary tables and graphs
+-   Manipulating special data types in R: factors and/or dates and times.
 -   Fitting a model object to your data, and extract a result.
 -   Reading and writing data as separate files.
 
-We will also explore more in depth the concept of *tidy data.* 
+We will also explore more in depth the concept of *tidy data.*
 
-**NOTE**: The main purpose of the mini data analysis is to integrate what you learn in class in an analysis. Although each milestone provides a framework for you to conduct your analysis, it's possible that you might find the instructions too rigid for your data set. If this is the case, you may deviate from the instructions -- just make sure you're demonstrating a wide range of tools and techniques taught in this class, and indicate *why* you had to deviate. Feel free to contact the instructor in these cases. 
+**NOTE**: The main purpose of the mini data analysis is to integrate what you learn in class in an analysis. Although each milestone provides a framework for you to conduct your analysis, it's possible that you might find the instructions too rigid for your data set. If this is the case, you may deviate from the instructions -- just make sure you're demonstrating a wide range of tools and techniques taught in this class, and indicate *why* you had to deviate. Feel free to contact the instructor in these cases.
 
 # Instructions
 
@@ -24,7 +28,7 @@ We will also explore more in depth the concept of *tidy data.*
 
 **To submit this milestone**, make sure to knit this `.Rmd` file to an `.md` file by changing the YAML output settings from `output: html_document` to `output: github_document`. Commit and push all of your work to your mini-analysis GitHub repository, and tag a release on GitHub. Then, submit a link to your tagged release on canvas.
 
-**Points**: This milestone is worth 50 points: 45 for your analysis, and 5 for overall reproducibility, cleanliness, and coherence of the Github submission. 
+**Points**: This milestone is worth 50 points: 45 for your analysis, and 5 for overall reproducibility, cleanliness, and coherence of the Github submission.
 
 **Research Questions**: In Milestone 1, you chose four research questions to focus on. Wherever realistic, your work in this milestone should relate to these research questions whenever we ask for justification behind your work. In the case that some tasks in this milestone don't align well with one of your research questions, feel free to discuss your results in the context of a different research question.
 
@@ -47,30 +51,27 @@ library(datateachr) # <- might contain the data you picked!
 library(tidyverse)
 ```
 
-# Task 1: Process and summarize your data 
+# Task 1: Process and summarize your data
 
-From Milestone 1, you should have an idea of the basic structure of your dataset (e.g. number of rows and columns, class types, etc.). Here, we will start investigating your data more in-depth using various data manipulation functions. 
+From Milestone 1, you should have an idea of the basic structure of your dataset (e.g. number of rows and columns, class types, etc.). Here, we will start investigating your data more in-depth using various data manipulation functions.
 
-### 1.1 (1 point) 
+### 1.1 (1 point)
 
 First, write out the 4 research questions you defined in milestone 1 were. This will guide your work through milestone 2:
 
 <!-------------------------- Start your work below ---------------------------->
+
 1.  What factors determine a game’s price?
 
-My hypothesis: Game type, the year of release, or achievements would
-influence the price.
+My hypothesis: Game type, the year of release, or achievements would influence the price.
 
 2.  What factors affect the discount strategy of games?
 
-My hypothesis: Games with better reviews tend to have lower discount
-rate.
+My hypothesis: Games with better reviews tend to have lower discount rate.
 
 3.  What is the relationship between discount rate and review score?
 
-4.  Are high-priced games with large discounts more likely to receive
-    positive reviews?
-<!----------------------------------------------------------------------------->
+4.  Are high-priced games with large discounts more likely to receive positive reviews? <!----------------------------------------------------------------------------->
 
 Here, we will investigate your data using various data manipulation and graphing functions.
 
@@ -87,17 +88,17 @@ Also make sure that you're using dplyr and ggplot2 rather than base R. Outside o
 1.  Compute the *range*, *mean*, and *two other summary statistics* of **one numerical variable** across the groups of **one categorical variable** from your data.
 2.  Compute the number of observations for at least one of your categorical variables. Do not use the function `table()`!
 3.  Create a categorical variable with 3 or more groups from an existing numerical variable. You can use this new variable in the other tasks! *An example: age in years into "child, teen, adult, senior".*
-4. Compute the proportion and counts in each category of one categorical variable across the groups of another categorical variable from your data. Do not use the function `table()`!
+4.  Compute the proportion and counts in each category of one categorical variable across the groups of another categorical variable from your data. Do not use the function `table()`!
 
 **Graphing:**
 
-6. Create a graph of your choosing, make one of the axes logarithmic, and format the axes labels so that they are "pretty" or easier to read.
-7. Make a graph where it makes sense to customize the alpha transparency.
+6.  Create a graph of your choosing, make one of the axes logarithmic, and format the axes labels so that they are "pretty" or easier to read.
+7.  Make a graph where it makes sense to customize the alpha transparency.
 
-Using variables and/or tables you made in one of the "Summarizing" tasks: 
+Using variables and/or tables you made in one of the "Summarizing" tasks:
 
-8. Create a graph that has at least two geom layers. 
-9. Create 3 histograms, with each histogram having different sized bins. Pick the "best" one and explain why it is the best.
+8.  Create a graph that has at least two geom layers.
+9.  Create 3 histograms, with each histogram having different sized bins. Pick the "best" one and explain why it is the best.
 
 Make sure it's clear what research question you are doing each operation for!
 
@@ -115,8 +116,8 @@ steam_games_filtered <- steam_games %>%  #create a new dataset
 
 ```
 
-1.  What factors determine a game’s price?
-  For this question. I want to see the relationship between game type and original price, so I would choose "1.Compute the *range*, *mean*, and *two other summary statistics* of **one numerical variable** across the groups of **one categorical variable** from your data."
+1.  What factors determine a game’s price? For this question. I want to see the relationship between game type and original price, so I would choose "1.Compute the *range*, *mean*, and *two other summary statistics* of **one numerical variable** across the groups of **one categorical variable** from your data."
+
 ```{r}
 steam_games_filtered %>%
   group_by(types) %>%
@@ -129,7 +130,8 @@ steam_games_filtered %>%
   )
 
 ```
-Then I want to draw a histogram to compare the mean original prices of these three types, so I choose 8. Create a graph that has at least two geom layers. 
+
+Then I want to draw a histogram to compare the mean original prices of these three types, so I choose 8. Create a graph that has at least two geom layers.
 
 ```{r}
 mean_price <- steam_games_filtered %>%
@@ -148,11 +150,9 @@ ggplot(mean_price, aes(x = types, y = mean_price, fill = types)) +
 
 ```
 
-
-
 2.  What factors affect the discount strategy of games?
 
-Because the original prices of every game are different, I think it would be much clear if I calculate the discount rate rather than directly compare the discount price. And I will then create a new variable based on the discount rate, so I will choose 3.  Create a categorical variable with 3 or more groups from an existing numerical variable. 
+Because the original prices of every game are different, I think it would be much clear if I calculate the discount rate rather than directly compare the discount price. And I will then create a new variable based on the discount rate, so I will choose 3. Create a categorical variable with 3 or more groups from an existing numerical variable.
 
 ```{r}
 steam_games_filtered <- steam_games_filtered %>%
@@ -176,8 +176,7 @@ steam_games_filtered <- steam_games_filtered %>%
 
 ```
 
-Then I want to draw a histogram to see the proportion and counts of each discount level in the three game types, so I choose 8. Create a graph that has at least two geom layers. 
-
+Then I want to draw a histogram to see the proportion and counts of each discount level in the three game types, so I choose 8. Create a graph that has at least two geom layers.
 
 ```{r}
 
@@ -197,7 +196,7 @@ ggplot(steam_games_filtered, aes(x = types, fill = discount_level)) +
 
 3.  What is the relationship between discount rate and review score?
 
-I would like to check the proportion and counts of each discount level in each review score, so I will choose 4. Compute the proportion and counts in each category of one categorical variable across the groups of another categorical variable from your data. 
+I would like to check the proportion and counts of each discount level in each review score, so I will choose 4. Compute the proportion and counts in each category of one categorical variable across the groups of another categorical variable from your data.
 
 I will first categorize all_review into 3 levels: mixed,mostly negative, mostly positive, positive and very positive.
 
@@ -231,7 +230,7 @@ discount_review_summary
 
 ```
 
-I would like to visualize my findings with histogram, so I would choose 8. Create a graph that has at least two geom layers. 
+I would like to visualize my findings with histogram, so I would choose 8. Create a graph that has at least two geom layers.
 
 ```{r}
 library(ggplot2)
@@ -246,12 +245,10 @@ ggplot(discount_review_summary, aes(x = review_level, y = proportion, fill = dis
 
 ```
 
+4.  Are high-priced games with large discounts more likely to receive positive reviews?
 
-4.  Are high-priced games with large discounts more likely to receive
-    positive reviews?
-    
 To analyze this question, I would like to first define what high-priced games are. I would like to rearrange the original prices in descending order, and categorize the first quatile as high-priced games, so I would choose 3. Create a categorical variable with 3 or more groups from an existing numerical variable.
-    
+
 ```{r}
 steam_games_filtered <- steam_games_filtered %>%
   mutate(
@@ -260,7 +257,7 @@ steam_games_filtered <- steam_games_filtered %>%
 
 ```
 
-Then I would like to paint a histogram to see the distribution of review levels in each discount levels among high-priced games, so I would choose 8. Create a graph that has at least two geom layers. 
+Then I would like to paint a histogram to see the distribution of review levels in each discount levels among high-priced games, so I would choose 8. Create a graph that has at least two geom layers.
 
 ```{r}
 
@@ -278,10 +275,6 @@ ggplot(discount_review_summary, aes(x = review_level, y = proportion, fill = dis
 
 ```
 
-    
-    
-    
-
 <!----------------------------------------------------------------------------->
 
 ### 1.3 (2 points)
@@ -296,7 +289,7 @@ For question 1 and 2, I found that game bundles tend to have higher original pri
 
 <!----------------------------------------------------------------------------->
 
-# Task 2: Tidy your data 
+# Task 2: Tidy your data
 
 In this task, we will do several exercises to reshape our data. The goal here is to understand how to do this reshaping with the `tidyr` package.
 
@@ -369,7 +362,6 @@ print(steam_games_retiddy)
 
 ```
 
-
 <!----------------------------------------------------------------------------->
 
 ### 2.3 (4 points)
@@ -389,18 +381,15 @@ Explain your decision for choosing the above two research questions.
 
 I would choose the above two research questions because in previous tasks, I only explore the relationship between game types and review levels with game prices and discount rate. I think there would be other undetect factors. I'm also interested in the relationship between release dates and game prices.
 
-
 <!----------------------------------------------------------------------------->
 
 Now, try to choose a version of your data that you think will be appropriate to answer these 2 questions. Use between 4 and 8 functions that we've covered so far (i.e. by filtering, cleaning, tidy'ing, dropping irrelevant columns, etc.).
 
-(If it makes more sense, then you can make/pick two versions of your data, one for each research question.) 
+(If it makes more sense, then you can make/pick two versions of your data, one for each research question.)
 
 <!--------------------------- Start your work below --------------------------->
 
 I would choose the tidy version of data to continue my analysis because my analysis focuses on the pricing and discounting of games, which involves numeric variables. It would be easier for me to visualize the data if one column only contains one value.
-
-
 
 # Task 3: Modelling
 
@@ -410,11 +399,11 @@ Pick a research question from 1.2, and pick a variable of interest (we'll call i
 
 <!-------------------------- Start your work below ---------------------------->
 
-**Research Question**:  What factors determine a game’s price?
+**Research Question**: What factors determine a game’s price?
 
-**Variable of interest**: original price, release date.
+**Variable of interest**: original price
 
-I'm interested the relationship between original price and release date of the games. My hypothesis is that older games tend to have lower orginal prices than the new ones. 
+I'm interested the relationship between original price and release date of the games. My hypothesis is that older games tend to have lower orginal prices than the new ones.
 
 <!----------------------------------------------------------------------------->
 
@@ -430,6 +419,24 @@ Fit a model or run a hypothesis test that provides insight on this variable with
 
 <!-------------------------- Start your work below ---------------------------->
 
+I would like to calculate the time difference(days) between 2025-10-01 and the release date of the games.
+
+```{r}
+steam_games_filtered <- steam_games_filtered %>%
+  mutate(release_date = mdy(release_date)) %>%
+  mutate(days_since_release = as.numeric(Sys.Date() - release_date) )
+```
+
+Then I would like to perform linear model to test the relationship between days since released and original prices.
+
+```{r}
+original_price_model <- lm(original_price ~ days_since_release, data = steam_games_filtered)
+
+summary(original_price_model)
+
+
+```
+
 <!----------------------------------------------------------------------------->
 
 ## 3.2 (3 points)
@@ -441,6 +448,16 @@ Produce something relevant from your fitted model: either predictions on Y, or a
 -   Obtain your results using the `broom` package if possible. If your model is not compatible with the broom function you're needing, then you can obtain your results by some other means, but first indicate which broom function is not compatible.
 
 <!-------------------------- Start your work below ---------------------------->
+
+```{r}
+
+library(broom)
+model_summary <- tidy(original_price_model)
+model_summary
+
+```
+
+The coefficient for days_since_release is `r round(model_summary$estimate[2], 4)` with a p-value of `r round(model_summary$p.value[2], 2)`.Because p-value is higher than 0.05, no significant relationship is found between original price and release date.
 
 <!----------------------------------------------------------------------------->
 
@@ -469,15 +486,15 @@ Write your model object from Task 3 to an R binary file (an RDS), and load it ag
 
 <!----------------------------------------------------------------------------->
 
-# Overall Reproducibility/Cleanliness/Coherence Checklist 
+# Overall Reproducibility/Cleanliness/Coherence Checklist
 
 Here are the criteria we're looking for.
 
 ## Coherence (0.5 points)
 
-The document should read sensibly from top to bottom, with no major continuity errors. 
+The document should read sensibly from top to bottom, with no major continuity errors.
 
-The README file should still satisfy the criteria from the last milestone, i.e. it has been updated to match the changes to the repository made in this milestone. 
+The README file should still satisfy the criteria from the last milestone, i.e. it has been updated to match the changes to the repository made in this milestone.
 
 ## File and folder structure (1 points)
 
@@ -491,7 +508,7 @@ Every level-1 folder (that is, the ones stored in the top level, like "Milestone
 
 All output is recent and relevant:
 
--   All Rmd files have been `knit`ted to their output md files. 
+-   All Rmd files have been `knit`ted to their output md files.
 -   All knitted md files are viewable without errors on Github. Examples of errors: Missing plots, "Sorry about that, but we can't show files that are this big right now" messages, error messages from broken R code
 -   All of these output files are up-to-date -- that is, they haven't fallen behind after the source (Rmd) files have been updated.
 -   There should be no relic output files. For example, if you were knitting an Rmd to html, but then changed the output to be only a markdown file, then the html file is a relic and should be deleted.
@@ -500,5 +517,4 @@ Our recommendation: delete all output files, and re-knit each milestone's Rmd fi
 
 ## Tagged release (0.5 point)
 
-You've tagged a release for Milestone 2. 
-
+You've tagged a release for Milestone 2.
