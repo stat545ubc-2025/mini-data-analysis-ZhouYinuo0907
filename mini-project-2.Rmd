@@ -269,9 +269,9 @@ high_price_review <- steam_games_filtered %>%
   group_by(discount_level, review_level) %>%
   summarise(count = n(), .groups = "drop")
 
-ggplot(discount_review_summary, aes(x = discount_level, y = proportion, fill = review_level)) + 
+ggplot(discount_review_summary, aes(x = review_level, y = proportion, fill = discount_level)) + 
   geom_col(position = "fill") + 
-  labs(title = "Distribution of Review Level by Discount Level(High-priced games)", x = "Discount Level", y = "Proportion", fill = "Review Level") + 
+  labs(title = "Distribution of Dicount Level by Review Level(High-priced games)", x = "Review Level", y = "Proportion", fill = "Discount Level") + 
   theme_minimal()
 
 
@@ -290,6 +290,9 @@ Based on the operations that you've completed, how much closer are you to answer
 
 <!------------------------- Write your answer here ---------------------------->
 
+My research questions focus on what factors would influence the original price and discount strategy of games, but I only explore the relationship between game types and review levels with game prices. I suppose there would be other undetected factors, too. For example, I think the game prices might also have something to do with release date. Older games might be less expensive than new ones.
+
+For question 1 and 2, I found that game bundles tend to have higher original prices and lower discount rate. For question 3 and 4, I found that regardless original prices, games with more positive reviews are less likely to have high discount rate.
 
 <!----------------------------------------------------------------------------->
 
