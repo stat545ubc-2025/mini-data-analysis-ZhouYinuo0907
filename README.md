@@ -6,9 +6,24 @@ This repository is for the mini data analysis of the STAT 545A course at the Uni
 
 *README.md*:A brief introduction of this repository
 
+*mini-data-analysis-ZhouYinuo0907.Rproj*: An R Project file which serves as the main project configuration for organizing, managing, and working on this Mini Data Analysis.
+
 *mini-project-1.Rmd*:An Rmd file which recorded how I choose the dataset and my initial research questions.
 
-*mini-project-1.md*:An md output that knitted from the according Rmd file.
+*mini-project-1.md*:An md output that knitted from the *mini-project-1.Rmd*.
+
+*mini-project-2.Rmd*:An Rmd file which recorded how I analyse my data and further explore my research questions.
+
+*mini-project-2.md*:An md output that knitted from the *mini-project-2.Rmd*.
+
+*output*: A folder that contains the output of my analysis.
+
+*mini-project-1_files/figure-gfm*:A folder that contains the pictures of *mini-project-1.md*.
+
+*mini-project-2_files*: A folder that contains the pictures of *mini-project-2.md*.
+
+
+
 
 ## You can run this repository by following steps:
 
