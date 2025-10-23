@@ -1,6 +1,5 @@
 ---
 title: "Mini Data Analysis Milestone 2"
-output: html_document
 editor_options: 
 output: 
   md_document:
